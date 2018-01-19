@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: n14SZqPSPdn4gqve8i3AXm4GsIsymzAVWlB1b5doYk649s9gTqlFMqbcdzASA6QrE0bJGAsO6KTsp/NE++gRCh7b1qOSU37+fDk8WnZB3jEN4qTYLOnQCHJNLi03iFdhYCEhvXhThe64E8MXEtcMLdZcASoeYZAdhSBPRogHl4AuX5m5xpxvFtSqgsbF0PVqQE18j14CvqF2tYi8M/CBdY2IWHdkJgL1RZqzeSAFOSVP2I4p4CoilQzZV1PuYOTW5R272sGpnfSO2CJV+lc3pnN4CYxH5O6/AGm/WBbo2mcD2ldSJrbm+qpC5k7hqYRCUvXDEalT5hZMw0KgBMJTZ2YazIRP4/uy3zaI7WuV48TKuIRDMHAW5v9ajtpAasi8wYMXxQl7aAKXPYpuuMyu0uI4Ac+PK54M7tcG0nO/4R8Aev62mXcj41uAj3Olo0YHs56Z3rdGHecVuUThwtvhDl6QbTaGZshXpouKa+cqdq4UKgyGe/sPqbLDfOfDC+e1Y5HXqZjiXKdEYUc0dEG/GYFDuCZBO3tbR8GmQ7cQ+QagzMvYZCXhc5L2cJG62EbO5+95Bf6R8e2CaO/U3RbgBUs/M6SfsAKLsqwJ+V1bYWCn+fZCSjdALbO8K2V5nXSPEj91mPY+iIUoqy85BtcT5coLG55EewocI5pyAHovitI=
+  app: secret-basin-82926
+  on:
+    repo: fishtailwrinkle/capstone2
