@@ -2,8 +2,35 @@
 	box-sizing: border-box;
 }
 
+body {
+	border: 1px black solid;
+	text-align: center;
+	max-width: 1000px;
+	min-height: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px;
+}
+
+header {
+	/*border: 1px black solid;	*/
+}
+
+.company, .supplier {
+	display: inline-block;
+	width: 49%;
+	border: 1px black solid;
+	margin-bottom: 20px;
+	line-height: 0;
+}
+
+table {
+	margin: 20px auto;
+}
+
 td, th {
 	border: 1px solid #000000;
 	text-align: left;
 	padding: 8px;
 }
+
