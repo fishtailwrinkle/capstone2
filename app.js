@@ -22,4 +22,8 @@ app.use(express.static('./public'));
 //app.use('/', indexRouter);
 app.use('/products', productRouter);
 
+app.use('*', function(req, res) {
+	res.status(404).json({message: 'Not Found'});	
+});
+
 module.exports = {app};

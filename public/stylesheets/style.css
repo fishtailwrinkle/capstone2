@@ -34,3 +34,37 @@ td, th {
 	padding: 8px;
 }
 
+div {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.content-left, .content-right {
+	display: inline-block;
+	vertical-align: top;
+	width: 49%;
+	border: 1px black solid;
+	margin-bottom: 20px;
+	line-height: 0;
+}
+
+ul {
+	list-style: none;	
+}
+
+.rfq-action {
+	vertical-align: top;
+	border: 1px black solid;
+	margin-bottom: 20px;
+	line-height: 0;	
+}
+
+.create-quote, .list-quote {
+	border: 1px black solid;
+}
+
+/*
+input {
+	width: 80%;
+}
+*/

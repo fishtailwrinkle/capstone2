@@ -4,6 +4,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
 
+const {ProductDetails} = require('../models');
 const {app} = require('../app');
 //const {TEST_DATABASE_URL} = require('../config');
 
@@ -20,4 +21,21 @@ describe('Connects to server', function() {
 		});
 	});
 });
+
+//GET
+describe('GET endpoint', function() {
+	it('should return all existing product with details', function() {
+		let res;
+		return chai.request(app)
+			.get('/products')
+			.then(function(_res) {
+				res = _res;
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.length.of.at.least(1);
+				//return ProductDetails.count();
+			});
+	});
+});
+
+
 
