@@ -1,9 +1,11 @@
 * {
 	box-sizing: border-box;
+	font-family: 'Barlow', sans-serif;
 }
 
 body {
-	border: 1px black solid;
+	/*border: 1px black solid;*/
+	background-color: #E9EDF0;
 	text-align: center;
 	max-width: 1000px;
 	min-height: 200px;
@@ -14,6 +16,11 @@ body {
 
 header {
 	/*border: 1px black solid;	*/
+	margin-bottom: 0;
+}
+
+img {
+	max-width: 799px;
 }
 
 .company, .supplier {
@@ -36,35 +43,90 @@ td, th {
 
 div {
 	margin-top: 15px;
-	margin-bottom: 15px;
 }
 
-.content-left, .content-right {
+
+.display-border {
+	border-width: 4px;
+	border-style: solid;
+	border-color: #DEE3E7;
+}
+
+.content-left {
 	display: inline-block;
 	vertical-align: top;
 	width: 49%;
-	border: 1px black solid;
-	margin-bottom: 20px;
+	margin-top: 0;
+	margin-bottom: 10px;
+	padding-bottom: 20px;
 	line-height: 0;
 }
 
-ul {
-	list-style: none;	
-}
-
-.rfq-action {
+.content-right {
+	display: inline-block;
 	vertical-align: top;
-	border: 1px black solid;
+	width: 49%;
+/*	border: 1px black solid;*/
+	margin-top: 0;
+	margin-bottom: 10px;
+	line-height: 0;
+}
+
+.content-center {
 	margin-bottom: 20px;
-	line-height: 0;	
 }
 
+ul {
+	list-style: none;
+	padding: 0;	
+}
+
+h1 {
+	color: #40200B;	
+	line-height: 1.1em;
+}
+
+h2, h3 {
+	/*color: #F95733;*/
+	line-height: 0;
+}
+
+.text-link {
+    color: #72A917;
+    text-decoration: none;
+}
+
+.rfq-search, .rfq-action {
+	vertical-align: top;
+/*	border: 1px black solid;*/
+}
+
+span {
+/*	color: #EF3E75;*/
+	color: #F75B35 ;
+}
+
+hr {
+	border-top: 4px solid #DEE3E7;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	width: 50%;
+}
+
+/*button {
+	margin-top: 10px;
+}*/
 .create-quote, .list-quote {
-	border: 1px black solid;
+/*	border: 1px black solid;*/
+	vertical-align: top;
+	text-align: center;
+	margin-top: 0;
 }
 
-/*
+
 input {
 	width: 80%;
+	max-width: 300px;
+	margin-bottom: 5px;
 }
-*/
+

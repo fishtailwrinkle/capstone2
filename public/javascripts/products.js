@@ -11,8 +11,8 @@ function getProductDetails(searchTerm, callbackFn) {
 //	let queryFound = 0;
 	$('.rfq-action').empty();
 	$('.content-left').empty();
+	$('.content-left').removeClass('display-border');		
 	//$('.content-right').empty();
-	//$('.create-quote').empty();
 	//$('.list-quote').empty();
 
 	$('.content-center').empty();
@@ -28,13 +28,15 @@ function getProductDetails(searchTerm, callbackFn) {
 			.fail(() => {
 
 				$('.create-quote').empty();
+				//$('.create-quote').removeClass('display-border');
 				$('.list-quote').empty();
+				$('.content-right').removeClass('display-border');
 
 
 //				addData.partNumber = searchTerm;	
 				getData.partNumber = searchTerm;	
 				$('.rfq-action').append(`
-					<p>${searchTerm} is not in the database.</p>
+					<span>${searchTerm}</span><p> is not in the database</p>
 					<button class="js-create-btn">Add New Product</button>
 					<button>Cancel</button>`);	
 			});
@@ -123,9 +125,14 @@ function deleteProductDetails() {
 			})
 			.done(() => {
 				$('.content-left').empty();
+				$('.content-left').removeClass('display-border');
+		
 				//$('.content-right').empty();
 				$('.create-quote').empty();
+				//$('.create-quote').removeClass('display-border');
 				$('.list-quote').empty();
+				$('.content-right').removeClass('display-border');
+
 				$('.content-center').empty();
 			});
 		} 
@@ -176,48 +183,38 @@ function saveNewProductDetails() {
 }
 
 function cancelNewProductDetails() {
-
+	$('.create-quote').on('click', '.js-cancelQuote-btn', event => {
+		$('.create-quote').empty();
+		renderCreateQuote();	
+	});
 }
 
-/*
-function displayTable() {
-	$('.content-left').empty();
-	$('.content-left').append(
-		'<form>' +
-			'<table>' +
-				'<tr class="table-header">' +
-				'<th>Part Number</th>' + 
-				'<th>Description</th>' +
-				'</tr>' +
-			'</table>' +
-		'</form>');
+function renderCreateQuote() {
+	$('.create-quote').html(
+		`<h2>Quotation</h2>` +
+		'<button class="js-addQuote-btn">Create New Quotation</button><br>'
+	);
 }
-*/
+
+
 // AR: setmax table column width
 function displayProductDetails(data) {
 	console.log("DISPLAY!!");
 
-	//$('.create-quote').empty();
-			//!jQuery.isEmptyObject(data.quotation[0])) {
-/*	if (rfqList.includes(data)) {
-		$('.rfq-action').append(`<p>${data.partNumber.toUpperCase()} already exists on this list.</p>`);	
-		console.log("Part number is already added to this list.");				
-	}
-	else {
-*/
 		rfqList.push(data);
-		//displayTable();
 
-		//$('table').after(
+
+		$('.content-left').addClass('display-border');
+//		$('.create-quote').addClass('display-border');
+		$('.content-right').addClass('display-border');
+
 		$('.content-left').html(
 			'<h2>Product Details</h2>' +
 			`<p>${data.partNumber}</p>` +
 			`<p>${data.description}</p>` +
 			'<button class="js-edit-btn">Edit</button>');
 
-		$('.create-quote').html(
-			`<h2>Quotation</h2>` +
-			'<button class="js-addQuote-btn">Create New Quotation</button><br>');
+		renderCreateQuote();
 
 		if (typeof data.quotation !== 'undefined' && 
 			data.quotation.length > 0 && 
@@ -225,62 +222,35 @@ function displayProductDetails(data) {
 
 			console.log(data.quotation[0]);
 
+		//$('.list-quote').addClass('display-border');
 
-/////////////////////////////////////////////////////////////
-/*
-			data.quotation.forEach((quote, index) => {
-			$('.content-right').append(
-//				`<h3>Supplier Name</h3>` +
-				`<p>${quote.supplier}</p>` + 
-//				`<h3>Quantity</h3>` +
-				`<p>${quote.quantity}pcs @ $${quote.price}/ea</p>` +
-				//`<button class='js-editQuote${index}-btn'>Edit</button>` +
-//				`<button class='js-deleteQuote${index}-btn'>Delete</button>`
-				`<button class='js-delete-quote'>Delete</button>`);
-			});
-*/
+
 		const quotesString = generateQuotesString(data);	
-		$('.list-quote').html(quotesString);
-//		$('.content-right').html(quotesString);
-/////////////////////////////////////////////////////////////
-
+		$('.list-quote').html('<hr>'+quotesString);
 
 	}
 	else {
 		$('.list-quote').empty();
+		//$('.list-quote').removeClass('display-border');
 	}
 
 
 		$('.content-center').html(
 			'<button class="js-addList-btn">Add to RFQ</button>' +
 			'<button class="js-deleteDb-btn">Delete</button>');
-/*
-		rfqList.forEach(rfq => {
-			$('table').append(
-				'<tr>' +
-				'<td>' + rfq.partNumber + '</td>' +
-				'<td>' + rfq.description + '</td>' +
-				'</tr>'
-			);		
-		});
-
-	}
-
-*/
 
 }
 
 function generateQuoteElement(quote, quoteIndex) {
+	//const date = quote.date.slice(0,10);
 	return `
-		<li class="js-quote-index-element">
+		<li class="js-quote-index-element" data-item-index="${quoteIndex}">
 			<div>
-				<p>${quote.supplier}</p>
-				<p>${quote.quantity}pcs @ $${quote.price}/ea</p>	
+				<p class="js-quote-supplier">${quote.supplier}</p>
+				<span class="js-quote-quantity">${quote.quantity}</span><span>pcs @ $</span><span class="js-quote-price">${quote.price}</span><span>/ea</span>	
 			</div>
 			<div>
-				<button class="js-quote-delete">
-					<span>Delete</span>
-				</button>
+				<button class="js-delete-quote">Delete</button>
 			</div>
 		</li>
 	`;
@@ -294,15 +264,56 @@ function generateQuotesString(data) {
 }
 
 function getQuoteIndex(quote) {
-	//const quoteIndexString = $(quote)
-	//	.closest('.js-')
-
+	const quoteIndexString = $(quote)
+		.closest('.js-quote-index-element')
+		.attr('data-item-index');
+	return parseInt(quoteIndexString, 10);
 }
 
 function deleteProductQuote() {
-	$('.content-right').on('click', '.js-delete-quote', event => {
+/*	$('.content-right').on('click', '.js-delete-quote', event => {
 		const quoteIndex = getQuoteIndex(event.currentTarget);
+		console.log('delete quote');
+		deleteForListItem(quoteIndex);
 	});	
+*/
+	const quoteData = {};
+
+	$('.content-right').on('click', '.js-delete-quote', event => {
+
+		const quoteIndex = getQuoteIndex(event.currentTarget);
+		quoteData.partNumber = getData.partNumber;
+		quoteData.quotation = {};
+		quoteData.quotation.supplier = getData.quotation[quoteIndex].supplier;
+		quoteData.quotation.quantity = getData.quotation[quoteIndex].quantity;
+		quoteData.quotation.price = getData.quotation[quoteIndex].price;
+		quoteData.quotation.date = getData.quotation[quoteIndex].date;
+		
+				
+		const PRODUCT_PUT_QUOTE_URL = PRODUCT_DETAILS_URL+getData.partNumber+"/"+quoteIndex;
+
+		console.log(PRODUCT_PUT_QUOTE_URL);
+		console.log(quoteData);
+
+		if (confirm("Are you sure you want to delete this quote?")) {
+
+		$.ajax({
+			method: "PUT",
+			url: PRODUCT_PUT_QUOTE_URL,
+			dataType: "json",
+			data: JSON.stringify(quoteData),
+			contentType: 'application/json'
+		})
+		.done(() => {
+//			displayProductDetails(getData);
+			getProductDetails(getData.partNumber, displayProductDetails);
+		});	
+	
+		}
+
+	});
+
+
 }
 
 function editProductDetails() {
@@ -313,6 +324,7 @@ function editProductDetails() {
 
 		$('.js-edit-btn').attr('disabled', 'disabled');
 		$('.content-left').empty();
+	//	$('.content-left').removeClass('display-border');
 		console.log('EDITING!!!');
 		$('.content-left').html(
 			'<h2>Product Details</h2>' +
@@ -445,6 +457,7 @@ $(function() {
 	deleteProductDetails();
 	addProductQuote();
 	saveProductQuote();
+	deleteProductQuote();
 //	getProductQuantity();
 //	getProductPrice();
 });

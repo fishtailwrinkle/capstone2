@@ -139,9 +139,34 @@ router.put('/:partNumber', jsonParser, (req, res) => {
 
 });
 
-//router.put quotation based on supplier id
+router.put('/:partNumber/:index', jsonParser, (req, res) => {
+	if (!(req.params.partNumber && req.body.partNumber && req.params.partNumber === req.body.partNumber)) {
+		res.status(400).json({
+			error: 'Request path id and request body id values must match'
+		});	
+	}
 
+	ProductDetail
+		.update(
+			{partNumber: req.params.partNumber}, 
+			{
+				$pull: {
+					quotation: {
+						supplier: req.body.quotation.supplier, 
+						quantity: req.body.quotation.quantity, 
+	//					price: req.body.quotation.price,
+	//					date: req.body.quotation.date
+					}
+				} 
+			},
+			{multi: true}
+		)
+		.then(() => res.status(204).end())
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({error: 'Something went wrong'});
+		});
+});
 
 module.exports = router;
-
-		
+	

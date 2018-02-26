@@ -15,14 +15,14 @@ function StorageException(message) {
 const productDetailSchema = mongoose.Schema({
 	partNumber: {type: String, required: true}, 
 	description: {type: String},
-	quotation: {type: Array, default: []}
-/*	quotation: [{
+//	quotation: {type: Array, default: []}
+	quotation: [{
 		supplier: {type: String, required: true},
 		quantity: {type: String}, 
 		price: {type: Number, required: true},
-		quoted: {type: Date, default: Date.now}
+		date: {type: Date, default: Date.now}
 	}]
-*/
+
 });
 
 productDetailSchema.methods.serialize = function() {
@@ -35,7 +35,7 @@ productDetailSchema.methods.serialize = function() {
 /*			supplier: this.quotation[0].supplier,
 			quantity: this.quotation.quantity,
 			price: this.quotation.price,
-			quoted: this.quotation.quoted
+			date: this.quotation.date
 */		
 	};
 };
@@ -45,7 +45,7 @@ const ProductDetails = {
 
 
 
-	create: function(partNumber, description, supplierId, quantity, price, dateQuoted) {
+	create: function(partNumber, description, supplierId, quantity, price, datedate) {
 		const product = {
 			id: uuid.v4(),
 			partNumber: partNumber,
@@ -55,7 +55,7 @@ const ProductDetails = {
 					supplierId: supplierId,
 					quantity: quantity,
 					price: price,
-			//		dateQuoted: dateQuoted || Date.now()
+			//		datedate: datedate || Date.now()
 			// 		add this back in mongoDB
 				 }]
 		};
