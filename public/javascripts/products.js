@@ -8,13 +8,9 @@ let getData = {};
 let addData = {};
 
 function getProductDetails(searchTerm, callbackFn) {
-//	let queryFound = 0;
 	$('.rfq-action').empty();
 	$('.content-left').empty();
 	$('.content-left').removeClass('display-border');		
-	//$('.content-right').empty();
-	//$('.list-quote').empty();
-
 	$('.content-center').empty();
 	
 	const PRODUCT_GET_URL = PRODUCT_DETAILS_URL+searchTerm;
@@ -26,22 +22,15 @@ function getProductDetails(searchTerm, callbackFn) {
 				console.log(data);
 			})
 			.fail(() => {
-
 				$('.create-quote').empty();
-				//$('.create-quote').removeClass('display-border');
 				$('.list-quote').empty();
 				$('.content-right').removeClass('display-border');
-
-
-//				addData.partNumber = searchTerm;	
 				getData.partNumber = searchTerm;	
 				$('.rfq-action').append(`
 					<span>${searchTerm}</span><p> is not in the database</p>
 					<button class="js-create-btn">Add New Product</button>
 					<button>Cancel</button>`);	
 			});
-		//		setTimeout(function() {callbackFn(product)}, 1);
-		//setTimeout(function() {callbackFn()}, 1);
 }
 
 function saveProductDetail() {
@@ -69,45 +58,27 @@ function saveProductQuote() {
 		const PRODUCT_PUT_URL = PRODUCT_DETAILS_URL+getData.partNumber;
 		console.log('Part Number is: '+getData.partNumber);
 
-/*
-		if (typeof getData.quotation === 'undefined') {
-			console.log('length is undefined!');
-			arrayIndex = 0;
-			getData.quotation = [];
-		} 
-		else {
-			console.log('length is: '+getData.quotation.length);
-			arrayIndex = getData.quotation.length;
-		}
-*/
-			console.log('length is: '+getData.quotation.length);
-			let arrayIndex = getData.quotation.length;
+		console.log('length is: '+getData.quotation.length);
+		let arrayIndex = getData.quotation.length;
 
-			getData.quotation[arrayIndex] = {
-				supplier: $('.js-input-supplier').val(),
-				quantity: $('.js-input-quantity').val(),
-				price: $('.js-input-price').val()
-			};
+		getData.quotation[arrayIndex] = {
+			supplier: $('.js-input-supplier').val(),
+			quantity: $('.js-input-quantity').val(),
+			price: $('.js-input-price').val()
+		};
 
-			console.log(getData);
-/*
-			getData.quotation[arrayIndex].supplier = $('.js-input-supplier').val(); 
-			getData.quotation[arrayIndex].quantity = $('.js-input-quantity').val(); 
-			getData.quotation[arrayIndex].price = $('.js-input-price').val(); 
-*/
-			$.ajax({
-				method: "PUT",
-				url: PRODUCT_PUT_URL,
-				dataType: "json",
-				data: JSON.stringify(getData),
-				contentType: 'application/json'
-			})
-			.done(() => {
-				displayProductDetails(getData);
-			});
+		console.log(getData);
 
-
-		
+		$.ajax({
+			method: "PUT",
+			url: PRODUCT_PUT_URL,
+			dataType: "json",
+			data: JSON.stringify(getData),
+			contentType: 'application/json'
+		})
+		.done(() => {
+			getProductDetails(getData.partNumber, displayProductDetails);
+		});
 	});
 }
 
@@ -147,9 +118,7 @@ function addProductDetails() {
 		event.preventDefault();
 
 		$('.rfq-action').append(
-			//'<form>' + 
 			`<h3>Part Number</h3>` +
-//			`<input id="part-number" value='${addData.partNumber}' required></input>` +
 			`<p>${getData.partNumber}</p>` +
 			`<h3>Description</h3>` +
 			'<input id="description" required></input><br>' +
@@ -160,7 +129,6 @@ function addProductDetails() {
 
 function saveNewProductDetails() {
 	$('.rfq-action').on('click', '.js-saveNew-btn', event => {
-//		addData.description = $('#description').val();
 		getData.description = $('#description').val();
 		getData.quotation = []; 
 
@@ -168,12 +136,10 @@ function saveNewProductDetails() {
 			method: "POST",
 			url: PRODUCT_DETAILS_URL,
 			dataType: "json",
-//			data: JSON.stringify(addData),
 			data: JSON.stringify(getData),
 			contentType: 'application/json'
 		})
 		.done(() => {
-//			displayProductDetails(addData);
 			displayProductSearch();
 			displayProductDetails(getData);
 			$('.rfq-action').empty();
@@ -200,12 +166,9 @@ function renderCreateQuote() {
 // AR: setmax table column width
 function displayProductDetails(data) {
 	console.log("DISPLAY!!");
-
 		rfqList.push(data);
 
-
 		$('.content-left').addClass('display-border');
-//		$('.create-quote').addClass('display-border');
 		$('.content-right').addClass('display-border');
 
 		$('.content-left').html(
@@ -220,10 +183,6 @@ function displayProductDetails(data) {
 			data.quotation.length > 0 && 
 			!jQuery.isEmptyObject(data.quotation[0])) {
 
-			console.log(data.quotation[0]);
-
-		//$('.list-quote').addClass('display-border');
-
 
 		const quotesString = generateQuotesString(data);	
 		$('.list-quote').html('<hr>'+quotesString);
@@ -231,12 +190,12 @@ function displayProductDetails(data) {
 	}
 	else {
 		$('.list-quote').empty();
-		//$('.list-quote').removeClass('display-border');
 	}
 
 
 		$('.content-center').html(
-			'<button class="js-addList-btn">Add to RFQ</button>' +
+			//////////////////////Enable later///////////////////////
+			//'<button class="js-addList-btn">Add to RFQ</button>' +
 			'<button class="js-deleteDb-btn">Delete</button>');
 
 }
@@ -248,6 +207,7 @@ function generateQuoteElement(quote, quoteIndex) {
 			<div>
 				<p class="js-quote-supplier">${quote.supplier}</p>
 				<span class="js-quote-quantity">${quote.quantity}</span><span>pcs @ $</span><span class="js-quote-price">${quote.price}</span><span>/ea</span>	
+				<p class="js-quote-supplier">${quote.date.slice(0,10)}</p>
 			</div>
 			<div>
 				<button class="js-delete-quote">Delete</button>
@@ -271,24 +231,12 @@ function getQuoteIndex(quote) {
 }
 
 function deleteProductQuote() {
-/*	$('.content-right').on('click', '.js-delete-quote', event => {
-		const quoteIndex = getQuoteIndex(event.currentTarget);
-		console.log('delete quote');
-		deleteForListItem(quoteIndex);
-	});	
-*/
 	const quoteData = {};
 
 	$('.content-right').on('click', '.js-delete-quote', event => {
-
 		const quoteIndex = getQuoteIndex(event.currentTarget);
 		quoteData.partNumber = getData.partNumber;
-		quoteData.quotation = {};
-		quoteData.quotation.supplier = getData.quotation[quoteIndex].supplier;
-		quoteData.quotation.quantity = getData.quotation[quoteIndex].quantity;
-		quoteData.quotation.price = getData.quotation[quoteIndex].price;
-		quoteData.quotation.date = getData.quotation[quoteIndex].date;
-		
+		quoteData.quotation = getData.quotation[quoteIndex];
 				
 		const PRODUCT_PUT_QUOTE_URL = PRODUCT_DETAILS_URL+getData.partNumber+"/"+quoteIndex;
 
@@ -296,24 +244,19 @@ function deleteProductQuote() {
 		console.log(quoteData);
 
 		if (confirm("Are you sure you want to delete this quote?")) {
-
-		$.ajax({
-			method: "PUT",
-			url: PRODUCT_PUT_QUOTE_URL,
-			dataType: "json",
-			data: JSON.stringify(quoteData),
-			contentType: 'application/json'
-		})
-		.done(() => {
-//			displayProductDetails(getData);
-			getProductDetails(getData.partNumber, displayProductDetails);
-		});	
-	
+			$.ajax({
+				method: "PUT",
+				url: PRODUCT_PUT_QUOTE_URL,
+				dataType: "json",
+				data: JSON.stringify(quoteData),
+				contentType: 'application/json'
+			})
+			.done(() => {
+				console.log("DELETING");
+				getProductDetails(getData.partNumber, displayProductDetails);
+			});	
 		}
-
 	});
-
-
 }
 
 function editProductDetails() {
@@ -324,7 +267,6 @@ function editProductDetails() {
 
 		$('.js-edit-btn').attr('disabled', 'disabled');
 		$('.content-left').empty();
-	//	$('.content-left').removeClass('display-border');
 		console.log('EDITING!!!');
 		$('.content-left').html(
 			'<h2>Product Details</h2>' +
@@ -333,12 +275,8 @@ function editProductDetails() {
 			'<h3>Description</h3>' +
 			`<input class="js-input-description" value='${getData.description}'></input><br>` +
 			'<button class="js-saveProduct-btn">Save</button>');
-
 	});
 }
-
-
-
 
 function addProductQuote() {
 	$('.content-right').on('click', '.js-addQuote-btn', event => {
@@ -357,72 +295,21 @@ function addProductQuote() {
 			'<button class="js-saveQuote-btn">Save</button>' +
 			'<button class="js-cancelQuote-btn">Cancel</button>');
 	});
-/*
-*/
 } 
-
-
-/*
-function getProductQuantity() {
-	$('.content-left').on('click', '.js-qty-button', event => {
-		$('.rfq-search').empty();
-		$('.js-qty-button').remove();
-		$('table').after('<button class="js-submit-button">submit</button>');
-		$(".table-header").append(
-			'<th>Quantity (pcs)</th>'
-		);
-
-		$('tr').not(".table-header").append(
-			'<td>' + `<input name="qty" type="number" required></input>` + '</td>'
-		);	
-	});	
-}
-
-
-function getProductPrice() {
-	$('.content-left').on('click', '.js-submit-button', event => {
-		// Save form input values into an array
-		qtyList = $('form').serializeArray();
-		qtyList.forEach(qty => {
-			console.log("qty is: " + qty.value);
-		});
-		$('.js-submit-button').remove();
-
-		displayTable();
-		$(".table-header").append(
-			'<th>Quantity (pcs)</th>' +
-			'<th>Price ($)</th>'
-		);
-
-		rfqList.forEach((rfq, index) => {
-			console.log("rfq is: " + rfq);
-			console.log("index is: " + index);
-			rfq.quotation.quantity = qtyList[index].value;
-			$('table').append(
-				'<tr>' +
-				'<td>' + rfq.partNumber + '</td>' +
-				'<td>' + rfq.description + '</td>' +
-				'<td>' + rfq.quotation.quantity + '</td>' +
-				'</tr>'
-			);	
-		});
-		$('tr').not(".table-header").append(
-			'<td>' + `<input name="price" type="number" required></input>` + '</td>'
-		);			
-	});
-}
-*/
 
 function getAndDisplayProductDetails() {
 	let query;
-
-	//getQuery();
 	$('.rfq-search').on('click', '.js-search-button', event => {
 		event.preventDefault();
 		query = $('.js-search-query').val().toUpperCase().trim();
 		$('.js-search-query').val('');
 		console.log("SEARCH!!! "+ query);
-		getProductDetails(query, displayProductDetails);
+		if (query !== '') {
+			getProductDetails(query, displayProductDetails);
+		} 
+		else {
+			alert("Please enter a non-empty string for part number!");
+		}
 	});
 
 }
@@ -433,21 +320,13 @@ function displayProductSearch() {
 		<form class="js-search-form">
 			<label>Enter a part number to add or retrieve product details</label><br>
 			<input type="text" class="js-search-query" required></input>
-			<button type="button" class="js-search-button">Search</button><br>
+			<button type="submit" class="js-search-button">Search</button><br>
 		</form>`);
-}
-
-function displayProductAction() {
-/*	$('.rfq-menu').html(`
-		<button type="button" class="js-saveProduct-btn">Edit</button><br>
-		<button type="button" class="js-deleteDb-btn">Delete</button>`);
-*/
 }
 
 // Main function to make subfunction calls
 $(function() {
 	displayProductSearch();
-	displayProductAction();
 	getAndDisplayProductDetails();
 	addProductDetails();
 	saveNewProductDetails();

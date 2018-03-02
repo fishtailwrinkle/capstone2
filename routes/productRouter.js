@@ -154,8 +154,7 @@ router.put('/:partNumber/:index', jsonParser, (req, res) => {
 					quotation: {
 						supplier: req.body.quotation.supplier, 
 						quantity: req.body.quotation.quantity, 
-	//					price: req.body.quotation.price,
-	//					date: req.body.quotation.date
+						price: req.body.quotation.price
 					}
 				} 
 			},
