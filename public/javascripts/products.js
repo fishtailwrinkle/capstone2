@@ -1,5 +1,5 @@
-const PRODUCT_DETAILS_URL = "http://localhost:8080/products/";
-//const PRODUCT_DETAILS_URL = "https://glacial-gorge-20797.herokuapp.com/products/";
+//const PRODUCT_DETAILS_URL = "http://localhost:8080/products/";
+const PRODUCT_DETAILS_URL = "https://quote-unquote-thinkful.herokuapp.com/products/";
 
 let rfqList = [];
 let qtyList = [];
