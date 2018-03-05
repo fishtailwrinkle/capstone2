@@ -1,5 +1,4 @@
 * {
-	box-sizing: border-box;
 	font-family: 'Barlow', sans-serif;
 }
 
@@ -7,11 +6,10 @@ body {
 	/*border: 1px black solid;*/
 	background-color: #E9EDF0;
 	text-align: center;
-	max-width: 1000px;
+	/*max-width: 1000px;*/
 	min-height: 200px;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 20px;
 }
 
 header {
@@ -21,6 +19,7 @@ header {
 
 img {
 	max-width: 799px;
+	margin: 0, auto;
 }
 
 .company, .supplier {
@@ -42,7 +41,7 @@ td, th {
 }
 
 div {
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 
@@ -50,30 +49,16 @@ div {
 	border-width: 4px;
 	border-style: solid;
 	border-color: #DEE3E7;
+	padding: 0.4em;
+	margin-bottom: 0.4em;
 }
 
-.content-left {
+.content-left, .content-right {
 	display: inline-block;
 	vertical-align: top;
-	width: 49%;
+/*	width: 49%;*/
 	margin-top: 0;
-	margin-bottom: 10px;
-	padding-bottom: 20px;
-	line-height: 0;
-}
-
-.content-right {
-	display: inline-block;
-	vertical-align: top;
-	width: 49%;
-/*	border: 1px black solid;*/
-	margin-top: 0;
-	margin-bottom: 10px;
-	line-height: 0;
-}
-
-.content-center {
-	margin-bottom: 20px;
+/*	line-height: 0;*/
 }
 
 ul {
@@ -82,13 +67,18 @@ ul {
 }
 
 h1 {
-	color: #40200B;	
+	font-family: 'Gloria Hallelujah', cursive;
+	color: #A5B8C6;	
 	line-height: 1.1em;
+	font-size: 3.2em;
+	margin-top: 0.2em;
+	margin-bottom: 0;
 }
 
 h2, h3 {
 	/*color: #F95733;*/
-	line-height: 0;
+	margin-top: 0;
+	margin-bottom: 0.2em;
 }
 
 .text-link {
@@ -96,33 +86,45 @@ h2, h3 {
     text-decoration: none;
 }
 
+.text-nonlink {
+    color: #EF3E75;
+}
+
+
+
 .rfq-search, .rfq-action {
 	vertical-align: top;
 /*	border: 1px black solid;*/
 }
 
+p {
+	margin: 0;
+}
+
+.p-left {
+	text-align: left;
+}
+
 span {
 /*	color: #EF3E75;*/
-	color: #F75B35 ;
+	color: #D72257 ;
 }
 
 hr {
+	border: 0;
 	border-top: 4px solid #DEE3E7;
 	margin-top: 15px;
 	margin-bottom: 15px;
 	width: 50%;
 }
 
-/*button {
-	margin-top: 10px;
-}*/
 .create-quote, .list-quote {
 /*	border: 1px black solid;*/
 	vertical-align: top;
 	text-align: center;
 	margin-top: 0;
+	margin-bottom: 0;
 }
-
 
 input {
 	width: 80%;

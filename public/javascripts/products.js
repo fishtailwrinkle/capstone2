@@ -10,9 +10,10 @@ let addData = {};
 
 function getProductDetails(searchTerm, callbackFn) {
 	$('.rfq-action').empty();
+	$('.rfq-action').removeClass('display-border');
 	$('.content-left').empty();
 	$('.content-left').removeClass('display-border');		
-	$('.content-center').empty();
+//	$('.content-center').empty();
 	
 	const PRODUCT_GET_URL = PRODUCT_DETAILS_URL+searchTerm;
 	console.log("URL is "+PRODUCT_GET_URL);
@@ -26,19 +27,30 @@ function getProductDetails(searchTerm, callbackFn) {
 				$('.create-quote').empty();
 				$('.list-quote').empty();
 				$('.content-right').removeClass('display-border');
-				getData.partNumber = searchTerm;	
+				getData.partNumber = searchTerm;
+				$('.rfq-action').addClass('display-border');
 				$('.rfq-action').append(`
 					<span>${searchTerm}</span><p> is not in the database</p>
 					<button class="js-create-btn">Add New Product</button>
-					<button>Cancel</button>`);	
+					<button class="js-cancel-btn">Cancel</button>`);	
 			});
+}
+
+function cancelNewProduct() {
+	$('.rfq-action').on('click', '.js-cancel-btn', event => {
+		$('.rfq-action').empty();
+		$('.rfq-action').removeClass('display-border');
+			
+	});
 }
 
 function saveProductDetail() {
 	$('.content-left').on('click', '.js-saveProduct-btn', event => {
+
+		if ($('.js-input-description').val() !== '') {
 		const PRODUCT_PUT_URL = PRODUCT_DETAILS_URL+getData.partNumber;
 		getData.description = $('.js-input-description').val();
-		console.log(PRODUCT_PUT_URL);
+//		console.log(PRODUCT_PUT_URL);
 
 		$.ajax({
 			method: "PUT",
@@ -50,16 +62,25 @@ function saveProductDetail() {
 		.done(() => {
 			displayProductDetails(getData);
 		});	
+		} 
+		else {
+			alert("Please enter a non-empty string for description!");
+		}
 	});
 }
 
 function saveProductQuote() {
 	$('.content-right').on('click', '.js-saveQuote-btn', event => {
-		console.log("Save quote~~~");
-		const PRODUCT_PUT_URL = PRODUCT_DETAILS_URL+getData.partNumber;
-		console.log('Part Number is: '+getData.partNumber);
+		
+		if ($('.js-input-supplier').val() !== '' &&
+			$('.js-input-quantity').val() !== '' &&
+			$('.js-input-price').val() !== '') {
 
-		console.log('length is: '+getData.quotation.length);
+
+		const PRODUCT_PUT_URL = PRODUCT_DETAILS_URL+getData.partNumber;
+//		console.log("Save quote~~~");
+//		console.log('Part Number is: '+getData.partNumber);
+//		console.log('length is: '+getData.quotation.length);
 		let arrayIndex = getData.quotation.length;
 
 		getData.quotation[arrayIndex] = {
@@ -80,12 +101,18 @@ function saveProductQuote() {
 		.done(() => {
 			getProductDetails(getData.partNumber, displayProductDetails);
 		});
+		} 
+		else {
+			alert("Please fill out all fields!");
+		}
+
+
 	});
 }
 
 function deleteProductDetails() {
 
-	$('.content-center').on('click', '.js-deleteDb-btn', event => {
+	$('.content-left').on('click', '.js-deleteDb-btn', event => {
 		const PRODUCT_DELETE_URL = PRODUCT_DETAILS_URL+getData.partNumber;
 		console.log('Deleting!!');	
 
@@ -105,7 +132,7 @@ function deleteProductDetails() {
 				$('.list-quote').empty();
 				$('.content-right').removeClass('display-border');
 
-				$('.content-center').empty();
+				//$('.content-center').empty();
 			});
 		} 
 	});
@@ -116,6 +143,8 @@ function addProductDetails() {
 		console.log("Clicked Add!!");
 		$('.rfq-search').empty();
 		$('.rfq-action').empty();
+		$('.rfq-action').removeClass('display-border');
+
 		event.preventDefault();
 
 		$('.rfq-action').append(
@@ -125,12 +154,27 @@ function addProductDetails() {
 			'<input id="description" required></input><br>' +
 			`<button class="js-saveNew-btn">Save</button>` +
 			`<button class="js-cancelNew-btn">Cancel</button>`);
+		$('.rfq-action').addClass('display-border');
+
+	});
+}
+
+function cancelAddNewProduct() {
+	$('.rfq-action').on('click', '.js-cancelNew-btn', event => {
+		$('.rfq-action').empty();
+		$('.rfq-action').removeClass('display-border');
+
+		displayProductSearch();
+
 	});
 }
 
 function saveNewProductDetails() {
 	$('.rfq-action').on('click', '.js-saveNew-btn', event => {
-		getData.description = $('#description').val();
+
+
+		if ($('#description').val() !== '') {
+	getData.description = $('#description').val();
 		getData.quotation = []; 
 
 		$.ajax({
@@ -144,7 +188,17 @@ function saveNewProductDetails() {
 			displayProductSearch();
 			displayProductDetails(getData);
 			$('.rfq-action').empty();
+			$('.rfq-action').removeClass('display-border');
+
 		});
+			} 
+		else {
+			alert("Please enter a non-empty string for description!");
+		}
+
+
+
+
 	});
 
 }
@@ -158,7 +212,7 @@ function cancelNewProductDetails() {
 
 function renderCreateQuote() {
 	$('.create-quote').html(
-		`<h2>Quotation</h2>` +
+		//`<h2>Quotation</h2>` +
 		'<button class="js-addQuote-btn">Create New Quotation</button><br>'
 	);
 }
@@ -173,10 +227,13 @@ function displayProductDetails(data) {
 		$('.content-right').addClass('display-border');
 
 		$('.content-left').html(
-			'<h2>Product Details</h2>' +
-			`<p>${data.partNumber}</p>` +
-			`<p>${data.description}</p>` +
-			'<button class="js-edit-btn">Edit</button>');
+			//'<h2>Product Details</h2>' +
+			`<h3 class="p-left">${data.partNumber}</h3>` +
+			`<p class="p-left">${data.description}</p>` +
+			'<div>' +
+			'<button class="js-edit-btn">Edit</button>' +
+			'<button class="js-deleteDb-btn">Delete</button>' +
+			'</div>');
 
 		renderCreateQuote();
 
@@ -184,7 +241,8 @@ function displayProductDetails(data) {
 			data.quotation.length > 0 && 
 			!jQuery.isEmptyObject(data.quotation[0])) {
 
-
+//		$('.content-right').addClass('display-border');
+	
 		const quotesString = generateQuotesString(data);	
 		$('.list-quote').html('<hr>'+quotesString);
 
@@ -194,10 +252,10 @@ function displayProductDetails(data) {
 	}
 
 
-		$('.content-center').html(
+		//$('.content-center').html(
 			//////////////////////Enable later///////////////////////
 			//'<button class="js-addList-btn">Add to RFQ</button>' +
-			'<button class="js-deleteDb-btn">Delete</button>');
+//);
 
 }
 
@@ -270,7 +328,7 @@ function editProductDetails() {
 		$('.content-left').empty();
 		console.log('EDITING!!!');
 		$('.content-left').html(
-			'<h2>Product Details</h2>' +
+		//	'<h2>Product Details</h2>' +
 			'<h3>Part Number</h3>' +
 			`<p>${getData.partNumber}</p>` +
 			'<h3>Description</h3>' +
@@ -286,7 +344,7 @@ function addProductQuote() {
 		//$('.js-addQuote-btn').attr('disabled', 'disabled');
 		//$('.content-right').html(
 		$('.create-quote').html(
-			'<h2>Quotation</h2>' +
+			//'<h2>Quotation</h2>' +
 			'<h3>Supplier Name</h3>' +
 			`<input class="js-input-supplier"></input><br>` +
 			`<h3>Quantity</h3>` +
@@ -319,7 +377,7 @@ function getAndDisplayProductDetails() {
 function displayProductSearch() {
 	$('.rfq-search').html(`
 		<form class="js-search-form">
-			<label>Enter a part number to add or retrieve product details</label><br>
+			<label>Enter a part number for info</label><br>
 			<input type="text" class="js-search-query" required></input>
 			<button type="submit" class="js-search-button">Search</button><br>
 		</form>`);
@@ -328,6 +386,8 @@ function displayProductSearch() {
 // Main function to make subfunction calls
 $(function() {
 	displayProductSearch();
+	cancelNewProduct();
+	cancelAddNewProduct();
 	getAndDisplayProductDetails();
 	addProductDetails();
 	saveNewProductDetails();

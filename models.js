@@ -17,7 +17,7 @@ const productDetailSchema = mongoose.Schema({
 	description: {type: String},
 	quotation: [{
 		supplier: {type: String, required: true},
-		quantity: {type: Number}, 
+		quantity: {type: Number, required: true}, 
 		price: {type: Number, required: true},
 		date: {type: Date, default: Date.now}
 	}]
