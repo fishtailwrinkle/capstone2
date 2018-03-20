@@ -1,12 +1,22 @@
 #	"Quote Unquote" Thinkful (https://www.thinkful.com/) Capstone2 Portfolio Project
 A responsive app to create, retrieve, update, delete product information and price details for cost management. 
 
+#	Live App
+https://quote-unquote-thinkful.herokuapp.com
+
 #	Screenshots
 Home Page to Start the App
 
-Create Example
+Create Product Example
 
-Retrieve Example
+Retrieve Product Example
+
+Edit Product Example
+
+Delete Product Example
+
+Create Quote Example
+
 
 #	Summary
 "Quote Unquote" allows the users to enter product part numbers for cost management. The app returns product information based on quote history feedbacked from suppliers. The user can add, delete, edit, retrive product details using product part numbers. "Quote Unquote" is designed for business owners to keep track of quote history, to monitor the price trend, to evaluate different suppliers, etc. with remarkable ease of mind for cost management.     
