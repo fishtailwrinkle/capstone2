@@ -66,6 +66,10 @@ ul {
 	padding: 0;	
 }
 
+li {
+	text-align: left;	
+}
+
 h1 {
 	font-family: 'Gloria Hallelujah', cursive;
 	color: #A5B8C6;	

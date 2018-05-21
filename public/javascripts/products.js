@@ -316,6 +316,14 @@ function displayProductSearch() {
 			<input type="text" class="js-search-query" required></input>
 			<button type="submit" class="js-search-button">Search</button><br>
 		</form>`);
+	$('.rfq-action').html(`		
+		<h2>Hello, Shop Owners! How does it work?</h2>
+		<ol>
+			<li>Enter a part number to check if a specific product already exists in the database for pricing info.</li>
+			<li>If the part number does not exist, you will have the option to create the product in the database or look up a different part number instead.
+			</li>
+			<li>If the part number is found in the database, you will be able to view the pricing history and to add/edit corresponding pricing info for record.</li>
+		</ol>`);
 }
 
 // Main function to make subfunction calls
