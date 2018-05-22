@@ -311,11 +311,18 @@ function getAndDisplayProductDetails() {
 // Display html form elements for product search
 function displayProductSearch() {
 	$('.rfq-search').html(`
+		<button type="button" class="js-demo-button">Try A Demo!</button><br>
+	`);
+/*
+	$('.rfq-search').html(`
 		<form class="js-search-form">
 			<label>Enter a part number for info</label><br>
 			<input type="text" class="js-search-query" required></input>
 			<button type="submit" class="js-search-button">Search</button><br>
 		</form>`);
+*/
+
+
 	$('.rfq-action').html(`		
 		<h2>Hello, Shop Owners! How does it work?</h2>
 		<ol>
@@ -326,9 +333,88 @@ function displayProductSearch() {
 		</ol>`);
 }
 
+function initiateDemo() {
+	const PRODUCT_DEMO_URL = PRODUCT_DETAILS_URL+'DEMO';
+	const demoData = {
+		partNumber: "DEMO",
+		description: "Iced Mint Mojito",
+		quotation: [{
+			supplier: "Starbucks",
+			quantity: 50,
+			price: 2.50
+		}, {
+			supplier: "Blue Bottle",
+			quantity: 20,
+			price: 2.99
+		}]
+	}; 
+
+	$('.rfq-search').on('click', '.js-demo-button', event => {
+		event.preventDefault();
+		$('.rfq-search').empty();
+
+		//get
+		$.getJSON(PRODUCT_DEMO_URL)
+		.done(() => {
+			//delete when demo exists
+			$.ajax({
+				method: "DELETE",
+				url: PRODUCT_DEMO_URL,
+				dataType: "json"
+			})
+			.done(() => {
+				//add demo after delete
+				$.ajax({
+					method: "POST",
+					url: PRODUCT_DETAILS_URL,
+					dataType: "json",
+					data: JSON.stringify(demoData),
+					contentType: 'application/json'
+				})
+				.done(() => {
+					$.ajax({
+						method: "PUT",
+						url: PRODUCT_DEMO_URL,
+						dataType: "json",
+						data: JSON.stringify(demoData),
+						contentType: 'application/json'
+					})
+				});
+			});
+		})
+		.fail(() => {
+			//add demo if not exist
+			$.ajax({
+				method: "POST",
+				url: PRODUCT_DETAILS_URL,
+				dataType: "json",
+				data: JSON.stringify(demoData),
+				contentType: 'application/json'
+			})
+			.done(() => {
+				$.ajax({
+					method: "PUT",
+					url: PRODUCT_DEMO_URL,
+					dataType: "json",
+					data: JSON.stringify(demoData),
+					contentType: 'application/json'
+				})
+			});
+		});
+
+		$('.rfq-search').html(`
+			<form class="js-search-form">
+				<label>Enter a part number for info</label><br>
+				<input type="text" class="js-search-query" placeholder="example: DEMO" required></input>
+				<button type="submit" class="js-search-button">Search</button><br>
+			</form>`);
+	});
+}
+
 // Main function to make subfunction calls
 $(function() {
 	displayProductSearch();
+	initiateDemo();
 	cancelNewProduct();
 	cancelAddNewProduct();
 	getAndDisplayProductDetails();
