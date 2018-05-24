@@ -334,24 +334,24 @@ function displayProductSearch() {
 }
 
 function initiateDemo() {
-	const PRODUCT_DEMO_URL = PRODUCT_DETAILS_URL+'DEMO';
+	const PRODUCT_DEMO_URL = PRODUCT_DETAILS_URL+'MZVLW1T0HMLH';
 	const demoData = {
-		partNumber: "DEMO",
-		description: "Iced Mint Mojito",
+		partNumber: "MZVLW1T0HMLH",
+		description: "Samsung 1TB PCI NVMe M.2 SSD",
 		quotation: [{
-			supplier: "Starbucks",
-			quantity: 50,
-			price: 2.50
-		}, {
-			supplier: "Blue Bottle",
+			supplier: "CDW",
 			quantity: 20,
-			price: 2.99
+			price: 850
+		}, {
+			supplier: "Avnet",
+			quantity: 15,
+			price: 870
 		}]
 	}; 
 
-	$('.rfq-search').on('click', '.js-demo-button', event => {
-		event.preventDefault();
-		$('.rfq-search').empty();
+//	$('.rfq-search').on('click', '.js-demo-button', event => {
+//		event.preventDefault();
+//		$('.rfq-search').empty();
 
 		//get
 		$.getJSON(PRODUCT_DEMO_URL)
@@ -404,11 +404,11 @@ function initiateDemo() {
 
 		$('.rfq-search').html(`
 			<form class="js-search-form">
-				<label>Enter a part number for info</label><br>
-				<input type="text" class="js-search-query" placeholder="example: DEMO" required></input>
+				<label>Enter a part number to track product cost history<br/>(For demo, use part number: MZVLW1T0HMLH)</label><br>
+				<input type="text" class="js-search-query" required></input>
 				<button type="submit" class="js-search-button">Search</button><br>
 			</form>`);
-	});
+//	});
 }
 
 // Main function to make subfunction calls
