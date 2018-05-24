@@ -130,9 +130,15 @@ hr {
 	margin-bottom: 0;
 }
 
-input {
+.js-search-query {
 	width: 80%;
 	max-width: 300px;
-	margin-bottom: 5px;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	font-size: 1.5em;
+}
+
+.js-search-button {
+	font-size: 1.5em;	
 }
 
