@@ -325,7 +325,7 @@ function displayProductSearch() {
 	$('.js-header').append(`
 		<div class="js-intro">
 		<h2>Hello, Shop Owners!</h2>
-		<p>We understand it's always a tedious task to request for quotes from different suppliers to plan for new inventory stocking and cost management. "Quote-Unquote" is designed to help you, as a shop owner, to digitize the "request for quote" data collected from your suppliers in the database. So that you can now easily retrieve the product cost history for better invetory price control and planning.</p> 
+		<p>We understand it's always a tedious task to request for quotes from different suppliers to plan for new inventory stocking and cost management. "Quote-Unquote" is designed to help you, as a shop owner, to digitize the "request for quote" data collected from your suppliers in the database. So that you can now easily retrieve the product cost history for better inventory price control and planning.</p> 
 		</div>
 	`);
 	$('.rfq-action').html(`		
