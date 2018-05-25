@@ -19,7 +19,7 @@ header {
 
 img {
 	max-width: 799px;
-	margin: 0, auto;
+	margin: 0.5em auto;
 }
 
 .company, .supplier {
@@ -44,6 +44,10 @@ div {
 	margin-top: 10px;
 }
 
+.js-intro, .js-manual {
+	border: 2px solid #DEE3E7;
+	text-align: left;
+}
 
 .display-border {
 	border-width: 4px;
@@ -142,3 +146,9 @@ hr {
 	font-size: 1.5em;	
 }
 
+label {
+	font-weight: bold;
+}
+label a {
+	color: #D72257;
+}

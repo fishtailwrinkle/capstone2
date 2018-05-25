@@ -322,15 +322,22 @@ function displayProductSearch() {
 		</form>`);
 */
 
-
+	$('.js-header').append(`
+		<div class="js-intro">
+		<h2>Hello, Shop Owners!</h2>
+		<p>We understand it's always a tedious task to request for quotes from different suppliers to plan for new inventory stocking and cost management. "Quote-Unquote" is designed to help you, as a shop owner, to digitize the "request for quote" data collected from your suppliers in the database. So that you can now easily retrieve the product cost history for better invetory price control and planning.</p> 
+		</div>
+	`);
 	$('.rfq-action').html(`		
-		<h2>Hello, Shop Owners! How does it work?</h2>
+		<div class="js-manual">
+		<h2>Read below to learn how to use "Quote-Unquote".</h2>
 		<ol>
 			<li>Enter a part number to check if a specific product already exists in the database for pricing info.</li>
 			<li>If the part number does not exist, you will have the option to create the product in the database or look up a different part number instead.
 			</li>
-			<li>If the part number is found in the database, you will be able to view the pricing history and to add/edit corresponding pricing info for record.</li>
-		</ol>`);
+			<li>If the part number is found in the database, you will be able to view the pricing history and to add/edit/delete corresponding pricing info for record.</li>
+		</ol>
+		</div>`);
 }
 
 function initiateDemo() {
@@ -404,7 +411,7 @@ function initiateDemo() {
 
 		$('.rfq-search').html(`
 			<form class="js-search-form">
-				<label>Enter a part number to track product cost history<br/>(For demo, use part number: MZVLW1T0HMLH)</label><br>
+				<label>Enter a part number to track product cost history<br/><a>(For demo, use part number: MZVLW1T0HMLH)</a></label><br>
 				<input type="text" class="js-search-query" required></input>
 				<button type="submit" class="js-search-button">Search</button><br>
 			</form>`);
